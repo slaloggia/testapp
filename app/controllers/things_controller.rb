@@ -22,4 +22,10 @@ class ThingsController < ApplicationController
         render json: thing
     end
 
+    def destroy
+        thing = Thing.find(params[:id])
+        thing.destroy
+        render json: thing
+    end
+
 end

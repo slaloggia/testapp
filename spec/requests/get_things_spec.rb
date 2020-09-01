@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe "GET routes" do
-    before(:all) do
-        10.times do 
+    before(:all) {
+        3.times do 
             Thing.create(name: Faker::Lorem.word)
         end
-        @things = Thing.all
-    end
+        # let!(:things) { Thing.all }
+    }
 
-    describe "get all things route", type: :request do
-        before { get "/things"}
+    describe "get all things route" do
+        before { get "/things" }
 
         it "returns all things" do
-            expect(JSON.parse(response.body).size).to eq(10)
+            expect(JSON.parse(response.body).size).to eq(Thing.count)
         end
 
         it "returns status code 200" do
@@ -20,8 +20,8 @@ RSpec.describe "GET routes" do
         end
     end
 
-    describe "get one thing route", type: :request do
-        let!(:id) { @things.sample.id }
+    describe "get one thing route" do
+        let!(:id) { Thing.all.sample.id }
         before { get "/things/#{id}" }
 
         it "returns status code 200" do
